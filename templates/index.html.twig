@@ -1,16 +1,29 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-
+	<h1>Mon super blog !</h1>
 	{% for post in posts %}
-
-		<h1>{{post.title}}</h1>
+		<h2>{{post.title}}</h2>
 		<p>{{post.content}}</p>
 		{{post.publishedat | date("d/m/Y")}}
 		<a href="{{ path("blog_read", { id: post.id }) }}">Lire la suite</a>
-		<p>{{ post.comments|length }}
-			commentaires</p>
-
+		<p>{{ post.comments|length }}commentaires</p>
 	{% endfor %}
-
+	<ul>
+	{% if page > 1 %}
+		<li>
+			<a href="{{ path("index", {page: page - 1 }) }}">Précedent</a>
+		</li>
+	{% endif %}
+	{% for p in 1..pages %}
+		<li>
+			<a href="{{ path("index", {page: p}) }}">{{p}}</a>
+		</li>
+	{% endfor %}
+	{% if page < pages %}
+		<li>
+			<a href="{{ path("index", {page: page + 1 }) }}">Suivant</a>
+		</li>
+	{% endif %}
+	</ul>
 {% endblock %}

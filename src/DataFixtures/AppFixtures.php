@@ -11,7 +11,7 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        for($i = 1; $i <= 20; $i++){
+        for($i = 1; $i <= 100; $i++){
             $post = new Post();
             $post->setTitle("post". $i);
             $post->setContent("contenu". $i);

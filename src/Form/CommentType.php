@@ -26,6 +26,7 @@ class CommentType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        //L'option data_class permet de dire a ma class CommentType quel est rattaché par la class Comment
         $resolver->setDefaults([
             'data_class' => Comment::class,
         ]);
