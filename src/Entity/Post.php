@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\VarDumper\Cloner\Data;
+use Symfony\Component\Validator\Constraints as Assert; 
+
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
@@ -22,8 +24,9 @@ class Post
 
     /**
      * @ORM\Column
+     * @Assert\NotBlank
      */
-    private string $title;
+    private ?string $title;
     
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -31,9 +34,16 @@ class Post
     private DateTimeImmutable $publishedAt;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column
      */
-    private string $content;
+    private ?string $image;
+
+    /**
+     * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @Assert\Length(min=10)
+     */
+    private ?string $content;
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
@@ -146,6 +156,26 @@ class Post
     public function setComments($comments)
     {
         $this->comments = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of image
+     */ 
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set the value of image
+     *
+     * @return  self
+     */ 
+    public function setImage($image)
+    {
+        $this->image = $image;
 
         return $this;
     }

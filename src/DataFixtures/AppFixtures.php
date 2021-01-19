@@ -15,6 +15,7 @@ class AppFixtures extends Fixture
             $post = new Post();
             $post->setTitle("post". $i);
             $post->setContent("contenu". $i);
+            $post->setImage("http://via.placeholder.com/400x300");
             $manager->persist($post);
 
             for($j =1; $j <= rand(1, 10) ; $j++){
