@@ -103,25 +103,15 @@ class BlogController extends AbstractController
     public function update(
         Request $request,
         Post $post,
-        SluggerInterface $slugger,
-        string $uploadsAbsoluteDir,
-        string $uploadsRelativeDir
+        UploaderInterface $uploader
+
     ): Response {
         $form = $this->createForm(PostType::class, $post)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get("file")->getData();
             if ($file !== null) {
-                $filename = sprintf(
-                    "%s_%s.%s",
-                    $slugger->slug($file->getClientOriginalName()),
-                    uniqid(),
-                    $file->getClientOriginalExtension()
-                );
-
-                $file->move($uploadsAbsoluteDir, $filename);
-
-                $post->setImage($uploadsRelativeDir . "/" . $filename);
+                $post->setImage($uploader->upload($file));
             }
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute("blog_read", ["id" => $post->getId()]);

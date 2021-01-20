@@ -2,8 +2,10 @@
 
 namespace App\Uploader;
 
+
 use App\Uploader\UploaderInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Uploader implements UploaderInterface 
 {
@@ -20,7 +22,7 @@ class Uploader implements UploaderInterface
         $this->uploadsRelativeDir = $uploadsRelativeDir;
     }
 
-    public function upload(UploaderInterface $file): string
+    public function upload(UploadedFile $file): string
     {
 
         $filename = sprintf(

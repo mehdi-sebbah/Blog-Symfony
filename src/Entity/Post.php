@@ -28,6 +28,7 @@ class Post
      */
     private ?string $title;
     
+    
     /**
      * @ORM\Column(type="datetime_immutable")
      */
