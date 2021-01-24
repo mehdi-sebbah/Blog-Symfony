@@ -6,12 +6,13 @@ security:
                 # This value auto-selects the best possible hashing algorithm
                 # (i.e. Sodium when available).
                 algorithm: auto
-                
+
     providers:
         users: 
             entity:
                 class: App\Entity\User
                 property: email
+                
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

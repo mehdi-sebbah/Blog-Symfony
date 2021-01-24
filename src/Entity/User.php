@@ -6,9 +6,16 @@ use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * On doit implémenter l'interface UserInterface si on veut créer des users !
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(
+ *  fields = {"email"},
+ *  message = "L'email existe déjà"
+ * )
  */
 class User implements UserInterface
 {
@@ -22,18 +29,27 @@ class User implements UserInterface
 
     /**
      * @var string|null
-     * @ORM\Column(unique=true)
+     * @ORM\Column
+     * @Assert\Email(message = "Respecter le schema email")
      */
     private ?string $email = null;
 
     /**
      * @ORM\Column
+     * @Assert\Length(min = 8, minMessage = "Le mot de passe doit contenir 8 caractères minimum !")
      */
     private ?string $password;
 
     /**
+     * @Assert\EqualTo(propertyPath="password", message="Votre mot de passe est différent !")
+     *
+     * @var [type]
+     */
+    public $confirm_password;
+
+    /**
      * @var string|null
-     * @ORM\Column(unique=true)
+     * @ORM\Column
      */
     private ?string $pseudo = null;
 
@@ -143,4 +159,5 @@ class User implements UserInterface
     {
        ; 
     }
+
 }

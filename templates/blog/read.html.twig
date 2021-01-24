@@ -6,18 +6,22 @@
 	<img src="{{ asset(post.image) }}" alt="{{ post.title }}">
 	<p>{{post.content}}</p>
 	{{post.publishedat | date("d/m/Y")}}
-    {{ form_start(form) }}
-        {{ form_row(form.author) }}
-        {{ form_row(form.content) }}
-        <button type="submit">Envoyer</button>
-    {{ form_end(form) }}
+
+	{% if app.user %}
+		{{ form_start(commentForm) }}
+		{{ form_row(commentForm.author) }}
+		{{ form_row(commentForm.content) }}
+		<button type="submit">Commenter</button>
+		{{ form_end(commentForm) }}
+	{% endif %}
+
 	<ul>
 		{% for comment in post.comments %}
-
-			<li>{{ comment.author }}
+			<li>
+				{{ comment.author }}
 				:
-				{{ comment.content }}</li>
-
+				{{ comment.content }}
+			</li>
 		{% endfor %}
 	</ul>
 
